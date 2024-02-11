@@ -1,6 +1,6 @@
 <?php
 
-use frontend\models\Clients;
+use frontend\models\ClientsForm;
 use yii\web\View;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -34,14 +34,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
+            
+            [
+                'attribute' => 'avatar',
+                'format' => 'html',
+                'value' => function($model) 
+                {
+                    if ($model->avatar){
+                        return Html::img(Yii::getAlias('@web') . '/' . $model->avatar, ['alt' => $model->avatar, 'style' => 'width:50px']);
+                    } else {
+                        return Html::img(Yii::getAlias('@web') . '/avatars/default_avatar.jpg', ['alt' => 'avatar', 'style' => 'width:50px']);
+                    }
+                    
+                },
+            ],
             'id',
             'fio',
             'sex',
             'birthday',
             [
                 'attribute' => 'created_at',
-                'value' => function($model){
+                'value' => function($model)
+                {
                     return Yii::$app->formatter->asDate($model->created_at, 'yyyy-MM-dd');
                 },
             ],
@@ -51,9 +65,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Clients $model, $key, $index, $column) {
+                'urlCreator' => function ($action, ClientsForm $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>

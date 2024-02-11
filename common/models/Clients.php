@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
@@ -26,26 +26,11 @@ class Clients extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public $client_clubs;
-    public $club_names;
-
+    
     public static function tableName()
     {
         return 'clients';
     }
-
-    public function getClubs()
-    {
-        return $this->hasMany(Clubs::class, ['id' => 'club_id'])
-            ->viaTable('client_to_clubs', ['client_id' => 'id']);
-    }
-
-    public function getClientsToClubs() 
-    {
-        return $this->hasMany(ClientToClubs::class, ['client_id' => 'id']);
-    }
-    
-    
 
     public function behaviors()
     {
@@ -71,10 +56,10 @@ class Clients extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fio','client_clubs'], 'required'],
+            [['fio'], 'required'],
             [['birthday'], 'safe'],
             [['created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at', 'deleted_by'], 'integer'],
-            [['fio', 'sex'], 'string', 'max' => 255],
+            [['fio', 'sex','avatar'], 'string', 'max' => 255],
         ];
     }
 
@@ -96,6 +81,7 @@ class Clients extends \yii\db\ActiveRecord
             //'deleted_by' => 'Deleted By',
             'birthday_range' => 'Дата рождения',
             'club_names' => 'Клубы',
+            //'avatar' => 'Аватарка'
         ];
     }
 }

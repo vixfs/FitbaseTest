@@ -3,16 +3,14 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\web\View;
-use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
-use frontend\models\Clubs;
+use frontend\models\ClientsForm;
 
 /** @var yii\web\View $this */
 /** @var frontend\models\Clients $model */
 /** @var yii\widgets\ActiveForm $form */
 
-/* $clubs = ArrayHelper::map(Clubs::find()->all(), 'id', 'name'); */
 ?>
 
 <div class="clients-form">
@@ -33,13 +31,15 @@ use frontend\models\Clubs;
         ],
     ]); ?>
 
-<?= $form->field($model, 'client_clubs')->widget(Select2::classname(), [
-    'data' => ArrayHelper::map(Clubs::find()->all(), 'id', 'name'),
-    'options' => ['multiple' => true, 'placeholder' => 'Select clubs'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]) ?>
+    <?= $form->field($model, 'client_clubs')->widget(Select2::classname(), [
+        'data' => $model->getClubsList(),
+        'options' => ['multiple' => true, 'placeholder' => 'Select clubs'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]) ?>
+
+    <?= $form->field($model, 'avatarFile')->fileInput() ?>
     
 
     <div class="form-group">

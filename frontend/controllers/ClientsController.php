@@ -3,13 +3,14 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Clients;
+use frontend\models\ClientsForm;
 use frontend\models\ClientsSearch;
 use frontend\models\ClientToClubs;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * ClientsController implements the CRUD actions for Clients model.
@@ -79,18 +80,33 @@ class ClientsController extends Controller
      */
     public function actionCreate()
 {
-    $model = new Clients();
+    $model = new ClientsForm();
+    
+    if ($model->load($this->request->post())) {
+        $model->avatarFile = UploadedFile::getInstance($model, 'avatarFile');
 
-    if ($this->request->isPost) {
-        if ($model->load($this->request->post()) && $model->save()) {
-            $selectedClubs = Yii::$app->request->post('Clients')['client_clubs'];
+        if ($model->save()) {
+            if ($model->avatarFile) {
+                $uploadPath = Yii::getAlias('@frontend/web/avatars/');
+                $fileName = 'avatar_' . Yii::$app->security->generateRandomString(10) . '.' . $model->avatarFile->extension;
+                $filePath = $uploadPath . $fileName;
 
-            if (!empty($selectedClubs)) {
-                foreach ($selectedClubs as $clubId) {
+                if ($model->avatarFile->saveAs($filePath)) {
+                    $model->avatar = 'avatars/' . $fileName;
+                    $model->save(false);
+                } else {
+                    Yii::error('Failed to save the uploaded file.');
+                }
+            }
+
+            if (!empty($model->client_clubs)) {
+                foreach ($model->client_clubs as $clubId) 
+                {
                     $clientToClub = new ClientToClubs();
                     $clientToClub->client_id = $model->id;
-                    $clientToClub->club_id = $clubId; 
-                    if (!$clientToClub->save()) {
+                    $clientToClub->club_id = $clubId;
+                    if (!$clientToClub->save())
+                    {
                         return 'Error while saving client to club with ID: ' . $clubId;
                     }
                 }
@@ -99,9 +115,6 @@ class ClientsController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
     }
-
-    // If there's an error or if the request is not a POST request, load the default values and render the create view
-    $model->loadDefaultValues();
 
     return $this->render('create', [
         'model' => $model,
@@ -120,11 +133,23 @@ class ClientsController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $model->avatarFile = UploadedFile::getInstance($model, 'avatarFile');
+            if ($model->avatarFile) {
+                $uploadPath = Yii::getAlias('@frontend/web/avatars/');
+                $fileName = 'avatar_' . Yii::$app->security->generateRandomString(10) . '.' . $model->avatarFile->extension;
+                $filePath = $uploadPath . $fileName;
+
+                if ($model->avatarFile->saveAs($filePath)) {
+                    $model->avatar = 'avatars/' . $fileName;
+                    $model->save(false);
+                } else {
+                    Yii::error('Failed to save the uploaded file.');
+                }
+            }
+
             ClientToClubs::deleteAll(['client_id' => $model->id]);
-            // Add new relations based on the posted club IDs
-            $selectedClubs = Yii::$app->request->post('Clients')['client_clubs'];
-            if (!empty($selectedClubs)) {
-                foreach ($selectedClubs as $clubId) {
+            if (!empty($model->client_clubs)) {
+                foreach ($model->client_clubs as $clubId) {
                     $clientToClub = new ClientToClubs();
                     $clientToClub->client_id = $model->id;
                     $clientToClub->club_id = $clubId; 
@@ -166,7 +191,7 @@ class ClientsController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Clients::findOne(['id' => $id])) !== null) {
+        if (($model = ClientsForm::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

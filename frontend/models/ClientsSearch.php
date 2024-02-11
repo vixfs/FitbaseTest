@@ -5,12 +5,12 @@ namespace frontend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\Clients;
+use frontend\models\ClientsForm;
 
 /**
  * ClientsSearch represents the model behind the search form of `frontend\models\Clients`.
  */
-class ClientsSearch extends Clients
+class ClientsSearch extends ClientsForm
 {
     /**
      * {@inheritdoc}
@@ -44,7 +44,7 @@ class ClientsSearch extends Clients
      */
     public function search($params)
     {
-        $query = Clients::find()->joinWith('clubs');
+        $query = ClientsForm::find()->joinWith('clubs');
         $query->select([
             'clients.*',
             'GROUP_CONCAT(clubs.name SEPARATOR ", ") AS club_names' // Ensure the comma and space are in single quotes 

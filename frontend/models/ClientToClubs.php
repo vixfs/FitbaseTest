@@ -47,7 +47,7 @@ class ClientToClubs extends \yii\db\ActiveRecord
 
     public function getClient()
     {
-        return $this->hasOne(Clients::className(), ['id' => 'client_id']);
+        return $this->hasOne(ClientsForm::className(), ['id' => 'client_id']);
     }
 
     public function getClub()
