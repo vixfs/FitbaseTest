@@ -21,7 +21,10 @@
         "kartik-v/yii2-date-range": "^1.7",
         "kartik-v/yii2-widget-datepicker": "^1.4",
         "2amigos/yii2-multi-select-widget": "^0.1.1",
-        "kartik-v/yii2-widget-select2": "^2.2"
+        "kartik-v/yii2-widget-select2": "^2.2",
+        "yii2tech/ar-softdelete": "^1.0",
+        "sciactive/pnotify": "^4.0",
+        "hiqdev/yii2-pnotify": "^0.0.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

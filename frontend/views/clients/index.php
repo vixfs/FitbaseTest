@@ -7,6 +7,9 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\web\JqueryAsset;
+use yii\web\YiiAsset;
+
 
 /** @var yii\web\View $this */
 /** @var frontend\models\ClientsSearch $searchModel */
@@ -22,9 +25,32 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Добавить', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
+    <button id="showNotificationBtn">Показать уведомление</button>
     
-
+    <?php
+        $this->registerJs(
+            "$('#showNotificationBtn').click(function() {
+                $.ajax({
+                    url: '/clients/show-notification',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        new PNotify({
+                            title: data.title,
+                            text: data.text,
+                            type: 'success'
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Ошибка:', error);
+                    }
+                });
+            });",
+            View::POS_READY,
+            'my-button-handler'
+        );
+    ?>
+    
     <?php Pjax::begin(['id' => 'grid-pjax']); ?>
 
     <?= $this->render('_search', ['model' => $searchModel]); ?>

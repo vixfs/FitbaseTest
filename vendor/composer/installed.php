@@ -55,6 +55,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'bower-asset/pnotify' => array(
+            'pretty_version' => '2.1.0',
+            'version' => '2.1.0.0',
+            'reference' => '4ca6d8089ec45997ae7be37efc51f1ddad336933',
+            'type' => 'bower-asset',
+            'install_path' => __DIR__ . '/../bower-asset/pnotify',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'bower-asset/punycode' => array(
             'pretty_version' => 'v1.3.2',
             'version' => '1.3.2.0',
@@ -222,6 +231,24 @@
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'hiqdev/yii2-asset-pnotify' => array(
+            'pretty_version' => '2.1.0',
+            'version' => '2.1.0.0',
+            'reference' => 'd5bfa39fba84741523238e53b85ef7c2f37b789f',
+            'type' => 'package',
+            'install_path' => __DIR__ . '/../hiqdev/yii2-asset-pnotify',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'hiqdev/yii2-pnotify' => array(
+            'pretty_version' => '0.0.1',
+            'version' => '0.0.1.0',
+            'reference' => '2d7a88a94be68d3a5db6ebc7bfdcd2f8c27f56fc',
+            'type' => 'yii2-extension',
+            'install_path' => __DIR__ . '/../hiqdev/yii2-pnotify',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'kartik-v/yii2-date-range' => array(
             'pretty_version' => 'v1.7.3',
@@ -462,6 +489,21 @@
             'install_path' => __DIR__ . '/../ralouphie/getallheaders',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'rndwiga/pnotify' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'sciactive/pnotify' => array(
+            'pretty_version' => '4.0.1',
+            'version' => '4.0.1.0',
+            'reference' => 'e2c8532e32e55ab12c1f598a0d8715c2c7a3ac37',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../sciactive/pnotify',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'sebastian/cli-parser' => array(
             'pretty_version' => '1.0.1',
@@ -810,6 +852,15 @@
             'install_path' => __DIR__ . '/../theseer/tokenizer',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'yii2tech/ar-softdelete' => array(
+            'pretty_version' => '1.0.4',
+            'version' => '1.0.4.0',
+            'reference' => '498ed03f89ded835f0ca156ec50d432191c58769',
+            'type' => 'yii2-extension',
+            'install_path' => __DIR__ . '/../yii2tech/ar-softdelete',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'yiisoft/yii2' => array(
             'pretty_version' => '2.0.49.3',

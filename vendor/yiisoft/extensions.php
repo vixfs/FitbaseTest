@@ -94,4 +94,22 @@ return array (
       '@kartik/select2' => $vendorDir . '/kartik-v/yii2-widget-select2/src',
     ),
   ),
+  'yii2tech/ar-softdelete' => 
+  array (
+    'name' => 'yii2tech/ar-softdelete',
+    'version' => '1.0.4.0',
+    'alias' => 
+    array (
+      '@yii2tech/ar/softdelete' => $vendorDir . '/yii2tech/ar-softdelete/src',
+    ),
+  ),
+  'hiqdev/yii2-pnotify' => 
+  array (
+    'name' => 'hiqdev/yii2-pnotify',
+    'version' => '0.0.1.0',
+    'alias' => 
+    array (
+      '@hiqdev/pnotify' => $vendorDir . '/hiqdev/yii2-pnotify/src',
+    ),
+  ),
 );

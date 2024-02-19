@@ -12,6 +12,8 @@ use yii\widgets\Pjax;
 /** @var frontend\models\ClubsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
+
+
 $this->title = 'Клубы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>

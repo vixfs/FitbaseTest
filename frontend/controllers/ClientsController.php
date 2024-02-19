@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
+use yii\web\Response;
 
 /**
  * ClientsController implements the CRUD actions for Clients model.
@@ -79,47 +80,22 @@ class ClientsController extends Controller
      * @return string|\yii\web\Response
      */
     public function actionCreate()
-{
-    $model = new ClientsForm();
-    
-    if ($model->load($this->request->post())) {
-        $model->avatarFile = UploadedFile::getInstance($model, 'avatarFile');
+    {
+        $model = new ClientsForm();
+        $model->loadDefaultValues();
 
-        if ($model->save()) {
-            if ($model->avatarFile) {
-                $uploadPath = Yii::getAlias('@frontend/web/avatars/');
-                $fileName = 'avatar_' . Yii::$app->security->generateRandomString(10) . '.' . $model->avatarFile->extension;
-                $filePath = $uploadPath . $fileName;
-
-                if ($model->avatarFile->saveAs($filePath)) {
-                    $model->avatar = 'avatars/' . $fileName;
-                    $model->save(false);
-                } else {
-                    Yii::error('Failed to save the uploaded file.');
-                }
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
-
-            if (!empty($model->client_clubs)) {
-                foreach ($model->client_clubs as $clubId) 
-                {
-                    $clientToClub = new ClientToClubs();
-                    $clientToClub->client_id = $model->id;
-                    $clientToClub->club_id = $clubId;
-                    if (!$clientToClub->save())
-                    {
-                        return 'Error while saving client to club with ID: ' . $clubId;
-                    }
-                }
-            }
-
-            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            $model->loadDefaultValues();
         }
-    }
 
-    return $this->render('create', [
-        'model' => $model,
-    ]);
-}
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
 
     /**
      * Updates an existing Clients model.
@@ -133,31 +109,6 @@ class ClientsController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            $model->avatarFile = UploadedFile::getInstance($model, 'avatarFile');
-            if ($model->avatarFile) {
-                $uploadPath = Yii::getAlias('@frontend/web/avatars/');
-                $fileName = 'avatar_' . Yii::$app->security->generateRandomString(10) . '.' . $model->avatarFile->extension;
-                $filePath = $uploadPath . $fileName;
-
-                if ($model->avatarFile->saveAs($filePath)) {
-                    $model->avatar = 'avatars/' . $fileName;
-                    $model->save(false);
-                } else {
-                    Yii::error('Failed to save the uploaded file.');
-                }
-            }
-
-            ClientToClubs::deleteAll(['client_id' => $model->id]);
-            if (!empty($model->client_clubs)) {
-                foreach ($model->client_clubs as $clubId) {
-                    $clientToClub = new ClientToClubs();
-                    $clientToClub->client_id = $model->id;
-                    $clientToClub->club_id = $clubId; 
-                    if (!$clientToClub->save()) {
-                        return 'Error while saving client to club with ID: ' . $clubId;
-                    }
-                }
-            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -176,9 +127,7 @@ class ClientsController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->deleted_at = time();
-        $model->deleted_by = Yii::$app->user->id;
-        $model->update(false);
+        $model->softDelete();
         return $this->redirect(['index']);
     }
 
@@ -196,5 +145,15 @@ class ClientsController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionShowNotification()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        return [
+            'title' => 'Внимание!',
+            'text' => 'Спасибо за внимание!'
+        ];
     }
 }

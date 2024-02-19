@@ -6,6 +6,8 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
+use yii2tech\ar\softdelete\SoftDeleteBehavior;
+
 
 /**
  * This is the model class for table "clients".
@@ -35,18 +37,25 @@ class Clients extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            [
+            'timestamp' => [
                 'class' => TimestampBehavior::class,
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
             ],
-            [
+            'blameable' => [
                 'class' => BlameableBehavior::class,
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
-            ]
+            ],
+            'softDelete' => [
+                'class' => SoftDeleteBehavior::class,
+                'softDeleteAttributeValues' => [
+                    'deleted_at' => time(),
+                    'deleted_by' => Yii::$app->user->id,
+                ],
+            ],
         ];
     }
 

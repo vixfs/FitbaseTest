@@ -35,6 +35,7 @@ class ComposerStaticInit2158b2fbf2c2f964ea5d76c3986297c9
             'yii\\composer\\' => 13,
             'yii\\bootstrap5\\' => 15,
             'yii\\' => 4,
+            'yii2tech\\ar\\softdelete\\' => 23,
         ),
         'k' => 
         array (
@@ -42,6 +43,11 @@ class ComposerStaticInit2158b2fbf2c2f964ea5d76c3986297c9
             'kartik\\daterange\\' => 17,
             'kartik\\date\\' => 12,
             'kartik\\base\\' => 12,
+        ),
+        'h' => 
+        array (
+            'hiqdev\\pnotify\\' => 15,
+            'hiqdev\\assets\\pnotify\\' => 22,
         ),
         'f' => 
         array (
@@ -149,6 +155,10 @@ class ComposerStaticInit2158b2fbf2c2f964ea5d76c3986297c9
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
         ),
+        'yii2tech\\ar\\softdelete\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yii2tech/ar-softdelete/src',
+        ),
         'kartik\\select2\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-select2/src',
@@ -164,6 +174,14 @@ class ComposerStaticInit2158b2fbf2c2f964ea5d76c3986297c9
         'kartik\\base\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-krajee-base/src',
+        ),
+        'hiqdev\\pnotify\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hiqdev/yii2-pnotify/src',
+        ),
+        'hiqdev\\assets\\pnotify\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hiqdev/yii2-asset-pnotify/src',
         ),
         'frontend\\tests\\' => 
         array (

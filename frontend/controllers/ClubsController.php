@@ -123,9 +123,7 @@ class ClubsController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->deleted_at = time();
-        $model->deleted_by = Yii::$app->user->id;
-        $model->update(false);
+        $model->softDelete();
         return $this->redirect(['index']);
     }
 
